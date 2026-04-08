@@ -1,24 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- NUEVO: MANEJO DE SESIÓN EN EL HEADER ---
+    // --- MANEJO DE SESIÓN EN EL HEADER ---
     const infoUsuario = document.getElementById('info-usuario');
     const usuarioGuardado = localStorage.getItem('usuarioLogueado');
 
     if (usuarioGuardado) {
-        // Transformar el texto guardado de vuelta a un objeto JavaScript
         const user = JSON.parse(usuarioGuardado);
         
-        // Capitalizamos la primera letra del rol (ej: "supervisor" -> "Supervisor")
-        const rolCapitalizado = user.rol.charAt(0).toUpperCase() + user.rol.slice(1);
+        // Normalizamos el rol para la comparación (quitamos espacios y pasamos a minúsculas)
+        const rolReal = user.rol.trim().toLowerCase();
         
-        // Mostramos el Rol y el Nombre en la esquina superior derecha
+        const rolCapitalizado = rolReal.charAt(0).toUpperCase() + rolReal.slice(1);
         infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
-    } else {
-        // Si alguien entra a listado.html sin loguearse, lo pateamos al index
-        window.location.href = 'index.html';
-        return; // Detenemos la ejecución de este script
-    }
 
+        // --- LÓGICA DE RESTRICCIÓN DE NUEVO ENVÍO ---
+        const btnNuevoEnvio = document.getElementById('btn-nuevo-envio');
+
+        // Verificamos el rol normalizado
+        if (rolReal === 'supervisor' && btnNuevoEnvio) {
+            console.log("Rol de supervisor detectado. Ocultando botón de nuevo envío...");
+            btnNuevoEnvio.style.setProperty('display', 'none', 'important');
+        }
+    } else {
+        window.location.href = 'index.html';
+        return;
+    }
     // Funcionalidad para Cerrar Sesión con confirmación
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {

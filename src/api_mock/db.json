@@ -32,6 +32,17 @@
       "estado": "En tránsito",
       "prioridad": "Baja",
       "fecha": "7/4/2026"
+    },
+    {
+      "id": "sXcAombOBwE",
+      "trackingId": "TRK49858",
+      "remitente": "Matias",
+      "destinatario": "Elena",
+      "origen": "forest 3456",
+      "destino": "cabildo 7654",
+      "estado": "Pendiente",
+      "prioridad": "Alta",
+      "fecha": "8/4/2026"
     }
   ],
   "empleados": [
