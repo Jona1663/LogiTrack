@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Seguimiento de Envío</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">LogiTrack 📦</a>
+        <div class="user-info">
+            <span id="info-cliente">Cargando...</span>
+            <button class="btn-icon" id="btn-logout" title="Cerrar sesión">👤</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Estado de tu Envío</h1>
+        
+        <div id="detalle-envio-cliente" class="form-container">
+            <p style="text-align: center;">Buscando información del envío...</p>
+        </div>
+
+        <div class="form-actions">
+            <a href="cliente.html" class="btn-primary">Nueva Búsqueda</a>
+        </div>
+    </main>
+
+    <script src="seguimiento.js"></script>
+</body>
+</html>

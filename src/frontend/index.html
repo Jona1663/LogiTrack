@@ -227,30 +227,41 @@
             alert("Registro exitoso. Ahora podés ingresar al sistema.");
             showTab('login');
         }
-
         // ----------------------------------------------------
-        // 3. LÓGICA DE LOGIN/REGISTRO CLIENTES
+        // 2. LÓGICA ROBUSTA DE LOGIN de clientes
         // ----------------------------------------------------
         async function loginCliente(e) {
             e.preventDefault();
-            const email = document.getElementById('log-cli-email').value;
-            const pass = document.getElementById('log-cli-pass').value;
-            const res = await fetch(`${API}/clientes?email=${email}&clave=${pass}`);
-            const data = await res.json();
             
-            if(data.length > 0) {
-                alert(`¡Hola ${data[0].nombre}!`);
-                
-                // Guardamos el cliente en LocalStorage como "Empresa"
-                localStorage.setItem('usuarioLogueado', JSON.stringify({
-                    nombre: data[0].nombre,
-                    rol: 'empresa' 
-                }));
+            const email = document.getElementById('log-cli-email').value.trim();
+            const pass = document.getElementById('log-cli-pass').value.trim();
 
-                // Redirección al panel del cliente
-                window.location.href = 'cliente.html';
-            } else {
-                alert("Email o contraseña incorrectos.");
+            console.log("Intentando login con:", email, pass); // Para depuración
+
+            try {
+                // Forzamos la consulta a la colección clientes
+                const response = await fetch(`${API}/clientes`);
+                const clientes = await response.json();
+
+                // Buscamos manualmente en el array para evitar problemas de filtrado de URL
+                const clienteEncontrado = clientes.find(c => c.email === email && c.clave === pass);
+
+                if (clienteEncontrado) {
+                    alert(`¡Hola ${clienteEncontrado.nombre}!`);
+                    
+                    localStorage.setItem('usuarioLogueado', JSON.stringify({
+                        nombre: clienteEncontrado.nombre,
+                        rol: 'cliente',
+                        email: clienteEncontrado.email
+                    }));
+
+                    window.location.href = 'cliente.html';
+                } else {
+                    alert("Email o contraseña incorrectos.");
+                }
+            } catch (error) {
+                console.error("Error detallado:", error);
+                alert("Error de conexión con el servidor.");
             }
         }
 

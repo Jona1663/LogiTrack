@@ -10,8 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 2. Cargamos los datos del cliente en el Header y en el mensaje de bienvenida
     const user = JSON.parse(usuarioGuardado);
-    document.getElementById('info-cliente').textContent = `Cliente | ${user.nombre}`;
-    document.getElementById('nombre-cliente').textContent = user.nombre;
+    
+    const infoClienteElement = document.getElementById('info-cliente');
+    const nombreClienteElement = document.getElementById('nombre-cliente');
+
+    if (infoClienteElement) infoClienteElement.textContent = `Cliente | ${user.nombre}`;
+    if (nombreClienteElement) nombreClienteElement.textContent = user.nombre;
 
     // 3. Funcionalidad para Cerrar Sesión
     const btnLogout = document.getElementById('btn-logout');
@@ -28,11 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
         formBuscar.addEventListener('submit', (e) => {
             e.preventDefault(); // Evitamos que la página se recargue
             
-            const trackingId = document.getElementById('input-tracking').value.trim().toUpperCase();
+            // Obtenemos el valor del input (Asegúrate que el ID sea 'input-tracking' en tu HTML)
+            const inputElement = document.getElementById('input-tracking');
+            const trackingId = inputElement ? inputElement.value.trim().toUpperCase() : "";
             
             if (trackingId) {
-                // Redirigimos a la página de detalle enviando el ID por la URL
-                window.location.href = `detalle.html?id=${trackingId}`;
+                // REDIRECCIÓN CORRECTA: Usamos trackingId que es la variable con el valor
+                window.location.href = `seguimiento.html?id=${trackingId}`;
+            } else {
+                alert("Por favor, ingresa un código de seguimiento.");
             }
         });
     }
