@@ -19,12 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return; // Detenemos la ejecución de este script
     }
 
-    // Funcionalidad para Cerrar Sesión
+    // Funcionalidad para Cerrar Sesión con confirmación
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {
-            localStorage.removeItem('usuarioLogueado');
-            window.location.href = 'index.html';
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                localStorage.removeItem('usuarioLogueado');
+                window.location.href = 'index.html';
+            }
         });
     }
     // ---------------------------------------------

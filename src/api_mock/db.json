@@ -12,17 +12,6 @@
       "fecha": "2026-04-03"
     },
     {
-      "id": "4k3Qjb6gFsQ",
-      "trackingId": "TRK84720",
-      "remitente": "asd",
-      "destinatario": "asd",
-      "origen": "asdasdasd",
-      "destino": "asd",
-      "estado": "Pendiente",
-      "prioridad": "Baja",
-      "fecha": "3/4/2026"
-    },
-    {
       "id": "T95Ji_VUoN8",
       "trackingId": "TRK52057",
       "remitente": "asd",
@@ -88,6 +77,13 @@
       "nombre": "facu",
       "rol": "operador",
       "clave": "1234"
+    },
+    {
+      "id": "fVIrwoircfE",
+      "legajo": "2100",
+      "nombre": "Jorge Gutierrez",
+      "rol": "operador",
+      "clave": "1122"
     }
   ],
   "clientes": [
@@ -96,6 +92,13 @@
       "dni": "40923016",
       "nombre": "Martin lopez",
       "email": "cliente@gmail.com",
+      "clave": "1122"
+    },
+    {
+      "id": "RgxaT1V58lo",
+      "dni": "32122322",
+      "nombre": "Sebastian Sarmiento",
+      "email": "sebas@gmal.com",
       "clave": "1122"
     }
   ],

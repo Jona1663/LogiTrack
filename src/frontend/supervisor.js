@@ -12,10 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('info-usuario').textContent = `Supervisor | ${user.nombre}`;
     
-    document.getElementById('btn-logout').addEventListener('click', () => {
-        localStorage.removeItem('usuarioLogueado');
-        window.location.href = 'index.html';
-    });
+
+    // Funcionalidad para Cerrar Sesión con confirmación
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                localStorage.removeItem('usuarioLogueado');
+                window.location.href = 'index.html';
+            }
+        });
+    }
 
     cargarEnvios();
 });
