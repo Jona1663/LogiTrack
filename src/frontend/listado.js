@@ -8,25 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (usuarioGuardado) {
         const user = JSON.parse(usuarioGuardado);
         
-        // Normalizamos el rol
         const rolReal = user.rol.trim().toLowerCase();
         const rolCapitalizado = rolReal.charAt(0).toUpperCase() + rolReal.slice(1);
         
-        // Dibujamos la info en el header
         if (infoUsuario) {
             infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
         }
 
-        // --- LÓGICA DE RESTRICCIÓN DE NUEVO ENVÍO ---
         const btnNuevoEnvio = document.getElementById('btn-nuevo-envio');
         if (rolReal === 'supervisor' && btnNuevoEnvio) {
             btnNuevoEnvio.style.setProperty('display', 'none', 'important');
         }
 
-        // Configuración del botón de Cerrar Sesión (Icono 👤)
         if (btnLogout) {
-            btnLogout.style.display = 'inline-block'; // Nos aseguramos que sea visible
-            // Usamos onclick para evitar duplicar eventos si se recarga el script
+            btnLogout.style.display = 'inline-block';
             btnLogout.onclick = () => {
                 if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
                     localStorage.removeItem('usuarioLogueado');
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     } else {
-        // Si no hay sesión, al login
         window.location.href = 'index.html';
         return;
     }
@@ -49,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectEstado = document.getElementById('select-estado');
     const mensajeVacio = document.getElementById('mensaje-vacio');
 
-    // Cargar datos de la API
     fetch('http://localhost:3000/envios')
         .then(response => response.json())
         .then(data => {
@@ -91,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             datos.forEach(envio => {
                 const tr = document.createElement('tr');
 
-                // Si es supervisor, mostramos el SELECT, si no, el BADGE
+                // Celda de Estado (Solo Supervisor edita)
                 const celdaEstado = rolReal === 'supervisor'
                     ? `<select class="edit-estado" data-id="${envio.id}">
                         <option value="Pendiente" ${envio.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
@@ -102,11 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     </select>`
                     : `<span class="badge ${getEstadoClass(envio.estado)}">${envio.estado}</span>`;
 
+                // --- NUEVA LÓGICA: Celda de Prioridad (Solo Operador edita) ---
+                const celdaPrioridad = rolReal === 'operador'
+                    ? `<select class="edit-prioridad" data-id="${envio.id}">
+                        <option value="Baja" ${envio.prioridad === 'Baja' ? 'selected' : ''}>Baja</option>
+                        <option value="Media" ${envio.prioridad === 'Media' ? 'selected' : ''}>Media</option>
+                        <option value="Alta" ${envio.prioridad === 'Alta' ? 'selected' : ''}>Alta</option>
+                    </select>`
+                    : `<span class="badge ${getPrioridadClass(envio.prioridad)}">${envio.prioridad}</span>`;
+
                 tr.innerHTML = `
                     <td><strong>${envio.trackingId}</strong></td>
                     <td>${envio.destino}</td>
                     <td>${celdaEstado}</td>
-                    <td><span class="badge ${getPrioridadClass(envio.prioridad)}">${envio.prioridad}</span></td>
+                    <td>${celdaPrioridad}</td>
                     <td style="text-align: center;">
                         <a href="detalle.html?id=${envio.trackingId}" class="btn-link">Ver detalle</a>
                     </td>
@@ -114,13 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 tbody.appendChild(tr);
             });
 
+            // Eventos para cambios de Estado
             document.querySelectorAll('.edit-estado').forEach(select => {
-                select.addEventListener('change', (e) => actualizarEstado(e.target.dataset.id, e.target.value));
+                select.addEventListener('change', (e) => actualizarCampo(e.target.dataset.id, { estado: e.target.value }, 'Estado'));
+            });
+
+            // Eventos para cambios de Prioridad
+            document.querySelectorAll('.edit-prioridad').forEach(select => {
+                select.addEventListener('change', (e) => actualizarCampo(e.target.dataset.id, { prioridad: e.target.value }, 'Prioridad'));
             });
         }
     };
     
-    // --- 3. FILTROS Y ACTUALIZACIÓN ---
     const aplicarFiltros = () => {
         const textoBusqueda = inputBusqueda.value.toLowerCase();
         const estadoFiltro = selectEstado.value;
@@ -138,22 +145,26 @@ document.addEventListener('DOMContentLoaded', () => {
     inputBusqueda?.addEventListener('input', aplicarFiltros);
     selectEstado?.addEventListener('change', aplicarFiltros);
 
-    const actualizarEstado = async (id, nuevoEstado) => {
+    // Función genérica para actualizar campos (Estado o Prioridad)
+    const actualizarCampo = async (id, objetoData, nombreCampo) => {
         try {
             const res = await fetch(`http://localhost:3000/envios/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ estado: nuevoEstado })
+                body: JSON.stringify(objetoData)
             });
 
             if (res.ok) {
-                alert('Estado actualizado correctamente.');
-                // Actualizamos localmente el array de envios para no recargar la página entera
+                alert(`${nombreCampo} actualizado correctamente.`);
                 const index = envios.findIndex(e => String(e.id) === String(id));
-                if (index !== -1) envios[index].estado = nuevoEstado;
+                if (index !== -1) {
+                    // Actualizamos dinámicamente el valor en nuestro array local
+                    const campo = Object.keys(objetoData)[0];
+                    envios[index][campo] = objetoData[campo];
+                }
                 aplicarFiltros(); 
             } else {
-                alert('Error al actualizar el estado.');
+                alert(`Error al actualizar el ${nombreCampo.toLowerCase()}.`);
             }
         } catch (error) {
             console.error("Error:", error);
