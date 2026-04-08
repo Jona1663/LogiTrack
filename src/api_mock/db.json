@@ -5,10 +5,10 @@
       "trackingId": "TRK12345",
       "remitente": "Juan Perez",
       "destinatario": "Ana Gomez",
-      "origen": "primera junta 3456",
-      "destino": "cordoba 2354",
-      "estado": "En sucursal",
-      "prioridad": "Baja",
+      "origen": "Primera Junta 3456",
+      "destino": "Cordoba 2354",
+      "estado": "Pendiente",
+      "prioridad": "Media",
       "fecha": "2026-04-03"
     },
     {
@@ -16,8 +16,8 @@
       "trackingId": "TRK29506",
       "remitente": "Jorge Fernandez",
       "destinatario": "Jonatan Capecce",
-      "origen": "serruti 4567",
-      "destino": "cespedes 8754",
+      "origen": "Serruti 4567",
+      "destino": "Cespedes 8754",
       "estado": "En tránsito",
       "prioridad": "Baja",
       "fecha": "7/4/2026"
@@ -25,11 +25,121 @@
     {
       "id": "sXcAombOBwE",
       "trackingId": "TRK49858",
-      "remitente": "Matias",
-      "destinatario": "Elena",
-      "origen": "forest 3456",
-      "destino": "cabildo 7654",
+      "remitente": "Matias Gonzalez",
+      "destinatario": "Elena Rojas",
+      "origen": "Forest 3456",
+      "destino": "Cabildo 7654",
       "estado": "Pendiente",
+      "prioridad": "Alta",
+      "fecha": "8/4/2026"
+    },
+    {
+      "id": "A1b2C3d4E5f",
+      "trackingId": "TRK88301",
+      "remitente": "Carlos Gardel",
+      "destinatario": "Maria Ruiz",
+      "origen": "Av. Corrientes 348",
+      "destino": "Av. Rivadavia 1200",
+      "estado": "En tránsito",
+      "prioridad": "Media",
+      "fecha": "8/4/2026"
+    },
+    {
+      "id": "G6h7I8j9K0l",
+      "trackingId": "TRK99210",
+      "remitente": "Sofia Castro",
+      "destinatario": "Pedro Pascal",
+      "origen": "Belgrano 450",
+      "destino": "San Martin 900",
+      "estado": "Entregado",
+      "prioridad": "Alta",
+      "fecha": "6/4/2026"
+    },
+    {
+      "id": "M1n2O3p4Q5r",
+      "trackingId": "TRK10293",
+      "remitente": "Lucia Lopez",
+      "destinatario": "Diego Torres",
+      "origen": "Mendoza 123",
+      "destino": "San Juan 554",
+      "estado": "Pendiente",
+      "prioridad": "Baja",
+      "fecha": "9/4/2026"
+    },
+    {
+      "id": "S6t7U8v9W0x",
+      "trackingId": "TRK40592",
+      "remitente": "Fernando Diaz",
+      "destinatario": "Camila Sosa",
+      "origen": "Peru 111",
+      "destino": "Chile 222",
+      "estado": "En tránsito",
+      "prioridad": "Alta",
+      "fecha": "8/4/2026"
+    },
+    {
+      "id": "Y1z2A3b4C5d",
+      "trackingId": "TRK50693",
+      "remitente": "Romina Yan",
+      "destinatario": "Facundo Arana",
+      "origen": "Alsina 999",
+      "destino": "Moreno 888",
+      "estado": "Pendiente",
+      "prioridad": "Media",
+      "fecha": "10/4/2026"
+    },
+    {
+      "id": "E6f7G8h9I0j",
+      "trackingId": "TRK60794",
+      "remitente": "Ricardo Darin",
+      "destinatario": "Guillermo Francella",
+      "origen": "Av. Libertador 1000",
+      "destino": "Av. Callao 2000",
+      "estado": "Entregado",
+      "prioridad": "Baja",
+      "fecha": "5/4/2026"
+    },
+    {
+      "id": "K1l2M3n4O5p",
+      "trackingId": "TRK70895",
+      "remitente": "Valeria Lynch",
+      "destinatario": "Patricia Sosa",
+      "origen": "Santa Fe 3300",
+      "destino": "Cordoba 4400",
+      "estado": "En tránsito",
+      "prioridad": "Alta",
+      "fecha": "8/4/2026"
+    },
+    {
+      "id": "Q6r7S8t9U0v",
+      "trackingId": "TRK80996",
+      "remitente": "Lionel Messi",
+      "destinatario": "Angel Di Maria",
+      "origen": "Rosario 10",
+      "destino": "Funes 20",
+      "estado": "Pendiente",
+      "prioridad": "Alta",
+      "fecha": "11/4/2026"
+    },
+    {
+      "id": "W1x2Y3z4A5b",
+      "trackingId": "TRK91097",
+      "remitente": "Tini Stoessel",
+      "destinatario": "Lali Esposito",
+      "origen": "Palermo 100",
+      "destino": "Recoleta 200",
+      "estado": "Entregado",
+      "prioridad": "Media",
+      "fecha": "4/4/2026"
+    },
+    {
+      "id": "C6d7E8f9G0h",
+      "trackingId": "TRK11298",
+      "remitente": "Charly Garcia",
+      "destinatario": "Fito Paez",
+      "origen": "Coronel Diaz 1100",
+      "destino": "Urquiza 300",
+      "estado": "En tránsito",
       "prioridad": "Baja",
       "fecha": "8/4/2026"
     }
@@ -45,36 +155,36 @@
     },
     {
       "legajo": "1003",
-      "nombre": "Luis23",
+      "nombre": "Luis Alberto",
       "rol": "supervisor",
-      "clave": "4451",
+      "clave": "1234",
       "id": "38-eYToDr3s"
     },
     {
       "id": "r1nhgIEG_Ek",
       "legajo": "1030",
-      "nombre": "jorge lopez",
+      "nombre": "Jorge Lopez",
       "rol": "supervisor",
-      "clave": "4451"
+      "clave": "1234"
     },
     {
       "id": "6iZtQ9tbIgI",
       "legajo": "1050",
-      "nombre": "asdad",
+      "nombre": "Roberto Gomez",
       "rol": "supervisor",
       "clave": "1234"
     },
     {
       "id": "vj_qnzp_hik",
       "legajo": "1001",
-      "nombre": "jose perez",
+      "nombre": "Jose Perez",
       "rol": "supervisor",
       "clave": "1234"
     },
     {
       "id": "pOyK5sUsWak",
       "legajo": "2003",
-      "nombre": "facu",
+      "nombre": "Facundo Quiroga",
       "rol": "operador",
       "clave": "1234"
     },
@@ -83,23 +193,37 @@
       "legajo": "2100",
       "nombre": "Jorge Gutierrez",
       "rol": "operador",
-      "clave": "1122"
+      "clave": "1234"
     }
   ],
   "clientes": [
     {
       "id": "ec0XJDxuU-k",
       "dni": "40923016",
-      "nombre": "Martin lopez",
+      "nombre": "Martin Lopez",
       "email": "cliente@gmail.com",
-      "clave": "1122"
+      "clave": "1234"
     },
     {
       "id": "RgxaT1V58lo",
       "dni": "32122322",
       "nombre": "Sebastian Sarmiento",
-      "email": "sebas@gmal.com",
-      "clave": "1122"
+      "email": "sebas@gmail.com",
+      "clave": "1234"
+    },
+    {
+      "id": "2cFb_ZIVqUc",
+      "dni": "3414551",
+      "nombre": "Alfredo Casero",
+      "email": "alfre2123@gmail.com",
+      "clave": "1234"
+    },
+    {
+      "id": "0vCNaSlsubE",
+      "dni": "324525124",
+      "nombre": "Luis Veliz",
+      "email": "luisveliz970@gmail.com",
+      "clave": "1234"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
