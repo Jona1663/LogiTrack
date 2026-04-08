@@ -76,9 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 3. FUNCIÓN PARA RENDERIZAR LA TABLA
+   // 3. FUNCIÓN PARA RENDERIZAR LA TABLA (Versión Simplificada)
     const renderTable = (datos) => {
-        tbody.innerHTML = ''; // Limpiar la tabla antes de inyectar nuevos datos
+        tbody.innerHTML = ''; 
         const usuario = JSON.parse(localStorage.getItem('usuarioLogueado'));
 
         if (datos.length === 0) {
@@ -88,38 +88,37 @@ document.addEventListener('DOMContentLoaded', () => {
             datos.forEach(envio => {
                 const tr = document.createElement('tr');
 
-                // Si es supervisor, mostramos un select. Si es operador, solo el badge.
+                // Lógica de visualización de estado según rol
                 const celdaEstado = usuario.rol === 'supervisor'
-                ? `<select class="edit-estado" data-id="${envio.id}">
-                    <option value="Pendiente" ${envio.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
-                    <option value="En tránsito" ${envio.estado === 'En tránsito' ? 'selected' : ''}>En tránsito</option>
-                    <option value="En sucursal" ${envio.estado === 'En sucursal' ? 'selected' : ''}>En sucursal</option>
-                    <option value="Entregado" ${envio.estado === 'Entregado' ? 'selected' : ''}>Entregado</option>
-                    <option value="Cancelado" ${envio.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
-                   </select>`
-                : `<span class="badge ${getEstadoClass(envio.estado)}">${envio.estado}</span>`;
+                    ? `<select class="edit-estado" data-id="${envio.id}">
+                        <option value="Pendiente" ${envio.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                        <option value="En tránsito" ${envio.estado === 'En tránsito' ? 'selected' : ''}>En tránsito</option>
+                        <option value="En sucursal" ${envio.estado === 'En sucursal' ? 'selected' : ''}>En sucursal</option>
+                        <option value="Entregado" ${envio.estado === 'Entregado' ? 'selected' : ''}>Entregado</option>
+                        <option value="Cancelado" ${envio.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                    </select>`
+                    : `<span class="badge ${getEstadoClass(envio.estado)}">${envio.estado}</span>`;
 
+                // Construcción de la fila con 5 columnas exactas
                 tr.innerHTML = `
                     <td><strong>${envio.trackingId}</strong></td>
-                    <td>${envio.remitente}</td>
-                    <td>${envio.destinatario}</td>
-                    <td>${envio.origen}</td>
                     <td>${envio.destino}</td>
                     <td>${celdaEstado}</td>
                     <td><span class="badge ${getPrioridadClass(envio.prioridad)}">${envio.prioridad}</span></td>
-                    <td>${envio.fecha}</td>
-                    <td><a href="detalle.html?id=${envio.trackingId}" class="btn-link">Ver detalle</a></td>
+                    <td style="text-align: center;">
+                        <a href="detalle.html?id=${envio.trackingId}" class="btn-link">Ver detalle</a>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            // Agregamos el evento a todos los selectores nuevos
+            // Eventos para los selectores (solo funcionarán si existen, es decir, si es supervisor)
             document.querySelectorAll('.edit-estado').forEach(select => {
-            select.addEventListener('change', (e) => actualizarEstado(e.target.dataset.id, e.target.value));
-        });
+                select.addEventListener('change', (e) => actualizarEstado(e.target.dataset.id, e.target.value));
+            });
         }
     };
-
+    
     // 4. FUNCIÓN PARA APLICAR FILTROS (BÚSQUEDA Y ESTADO)
     const aplicarFiltros = () => {
         const textoBusqueda = inputBusqueda.value.toLowerCase();
