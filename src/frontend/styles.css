@@ -23,7 +23,12 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.logo { font-size: 1.5rem; font-weight: bold; color: #118ab2; }
+.logo { 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    color: #118ab2; 
+    text-decoration: none !important;
+}
 
 .container {
     max-width: 900px;
@@ -200,4 +205,32 @@ body {
     border: 1px solid #ccc;
     font-family: inherit;
     cursor: pointer;
+}
+/* =========================================
+   Estilos específicos para el Portal de Clientes
+   ========================================= */
+
+.cliente-hero {
+    text-align: center;
+    padding: 50px 20px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    max-width: 500px;
+    margin: 30px auto 0;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }

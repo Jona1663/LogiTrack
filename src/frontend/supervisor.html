@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Panel de Supervisor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">LogiTrack 📦</a>
+        <div class="user-info">
+            <span id="info-usuario">Cargando...</span>
+            <button class="btn-icon" id="btn-logout" title="Cerrar sesión">👤</button>
+        </div>
+    </header>
+
+    <main class="container list-container">
+        <div class="list-header">
+            <h1 class="page-title">Gestión Avanzada de Envíos</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tracking ID</th>
+                        <th>Remitente</th>
+                        <th>Destinatario</th>
+                        <th>Estado</th>
+                        <th>Prioridad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-supervisor">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="supervisor.js"></script>
+</body>
+</html>

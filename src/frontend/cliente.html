@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Portal de Clientes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">LogiTrack 📦</a>
+        <div class="user-info">
+            <span id="info-cliente">Cargando...</span>
+            <button class="btn-icon" id="btn-logout" title="Cerrar sesión">👤</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="cliente-hero">
+            <h1 style="color: #118ab2;">¡Hola, <span id="nombre-cliente"></span>!</h1>
+            <p style="color: #555; font-size: 1.1rem;">Ingresá tu número de Tracking ID para ver el estado de tu envío en tiempo real.</p>
+            
+            <form id="form-buscar-envio" class="search-box">
+                <input type="text" id="input-tracking" placeholder="Ej: TRK12345" required>
+                <button type="submit" class="btn-primary" style="width: auto;">Buscar Envío</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="cliente.js"></script>
+</body>
+</html>

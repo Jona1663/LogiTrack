@@ -7,8 +7,8 @@
       "destinatario": "Ana Gomez",
       "origen": "primera junta 3456",
       "destino": "cordoba 2354",
-      "estado": "En sucursal",
-      "prioridad": "Alta",
+      "estado": "En tránsito",
+      "prioridad": "Media",
       "fecha": "2026-04-03"
     },
     {
@@ -40,8 +40,8 @@
       "destinatario": "Jonatan Capecce",
       "origen": "serruti 4567",
       "destino": "cespedes 8754",
-      "estado": "Pendiente",
-      "prioridad": "Alta",
+      "estado": "En tránsito",
+      "prioridad": "Baja",
       "fecha": "7/4/2026"
     }
   ],
@@ -73,6 +73,20 @@
       "legajo": "1050",
       "nombre": "asdad",
       "rol": "supervisor",
+      "clave": "1234"
+    },
+    {
+      "id": "vj_qnzp_hik",
+      "legajo": "1001",
+      "nombre": "luis veliz",
+      "rol": "supervisor",
+      "clave": "1234"
+    },
+    {
+      "id": "pOyK5sUsWak",
+      "legajo": "2003",
+      "nombre": "facu",
+      "rol": "operador",
       "clave": "1234"
     }
   ],

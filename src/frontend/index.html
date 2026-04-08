@@ -55,7 +55,7 @@
 <body>
 
     <header class="header">
-        <div class="logo">LogiTrack 📦</div>
+        <a href="index.html" class="logo">LogiTrack 📦</a>
     </header>
 
     <main class="container">
@@ -184,8 +184,12 @@
                             rol: user.rol 
                         }));
 
-                        // Redirección
-                        window.location.href = 'listado.html';
+                       if (user.rol === 'supervisor') {
+                           window.location.href = 'supervisor.html';
+                        }else {
+                             // Si es operador, va a la lista de consulta general (que tiene el botón para registrar nuevos envíos)
+                            window.location.href = 'listado.html';
+                        }
 
                     } else {
                         alert("Contraseña incorrecta.");
@@ -243,7 +247,8 @@
                     rol: 'empresa' 
                 }));
 
-                window.location.href = 'listado.html'; 
+                // Redirección al panel del cliente
+                window.location.href = 'cliente.html';
             } else {
                 alert("Email o contraseña incorrectos.");
             }
