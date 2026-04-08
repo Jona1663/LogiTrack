@@ -65,6 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Funcionalidad para Cerrar Sesión con confirmación
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                localStorage.removeItem('usuarioLogueado');
+                window.location.href = 'index.html';
+            }
+        });
+    }
+
     function getPrioridadClass(prioridad) {
         switch(prioridad) {
             case 'Alta': return 'prioridad-alta';
