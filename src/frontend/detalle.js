@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- NUEVO: MANEJO DE SESIÓN EN EL HEADER ---
+    const infoUsuario = document.getElementById('info-usuario');
+    const usuarioGuardado = localStorage.getItem('usuarioLogueado');
+
+    if (usuarioGuardado) {
+        const user = JSON.parse(usuarioGuardado);
+        // Normalizamos y capitalizamos el rol
+        const rolReal = user.rol.trim().toLowerCase();
+        const rolCapitalizado = rolReal.charAt(0).toUpperCase() + rolReal.slice(1);
+        
+        // Mostramos: "Supervisor | Nombre" o "Operador | Nombre"
+        if (infoUsuario) {
+            infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
+        }
+    } else {
+        // Si no hay sesión, redirigir al login
+        window.location.href = 'index.html';
+        return;
+    }
+
     // 1. Obtener el Tracking ID de la URL (ej: ?id=TRK12345)
     const urlParams = new URLSearchParams(window.location.search);
     const trackingIdBuscado = urlParams.get('id');
