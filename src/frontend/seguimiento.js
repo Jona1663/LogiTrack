@@ -2,29 +2,36 @@ const API = 'http://localhost:3000/envios';
 
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // --- 1. GESTIÓN DE SESIÓN EN EL HEADER (MODIFICADO) ---
+    // --- 1. GESTIÓN DE SESIÓN EN EL HEADER (PERSISTENTE) ---
     const usuarioGuardado = localStorage.getItem('usuarioLogueado');
     const user = usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
     
     const infoClienteElement = document.getElementById('info-cliente');
-    
-    // Si hay usuario, mostramos sus datos, si no, un texto genérico o vacío
-    if (infoClienteElement) {
-        if (user) {
-            // Capitalizamos el rol para que quede prolijo
+    const btnLogout = document.getElementById('btn-logout');
+
+    if (user) {
+        // Si hay usuario, inyectamos su nombre y rol
+        if (infoClienteElement) {
             const rol = user.rol ? user.rol.charAt(0).toUpperCase() + user.rol.slice(1) : 'Cliente';
             infoClienteElement.textContent = `${rol} | ${user.nombre}`;
-        } else {
+        }
+        // Nos aseguramos de que el botón de cerrar sesión (icono 👤) sea visible
+        if (btnLogout) {
+            btnLogout.style.display = 'inline-block';
+        }
+    } else {
+        // Si es consulta pública (sin sesión)
+        if (infoClienteElement) {
             infoClienteElement.textContent = "Consulta Pública";
+        }
+        // Ocultamos el icono de cerrar sesión si no hay nadie logueado
+        if (btnLogout) {
+            btnLogout.style.display = 'none';
         }
     }
 
-    // Funcionalidad para Cerrar Sesión
-    const btnLogout = document.getElementById('btn-logout');
+    // Lógica del botón de Cerrar Sesión
     if (btnLogout) {
-        // Si no hay usuario, ocultamos el botón de cerrar sesión
-        if (!user) btnLogout.style.display = 'none';
-
         btnLogout.addEventListener('click', () => {
             if (confirm('¿Deseas cerrar la sesión?')) {
                 localStorage.removeItem('usuarioLogueado');
@@ -61,15 +68,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return map[estado] || '';
             };
 
-            // LÓGICA DE PRIVACIDAD: Solo creamos el HTML del destinatario si hay sesión
+            // PRIVACIDAD: El destinatario solo se genera si 'user' no es null
             const htmlDestinatario = user 
                 ? `<div class="form-group">
                         <label>Destinatario:</label>
                         <p style="font-weight:bold; margin-top:5px;">${envio.destinatario}</p>
                    </div>`
-                : ''; // Si no hay user, esto queda vacío
+                : ''; 
 
-            // Renderizamos la tarjeta
             contenedor.innerHTML = `
                 <div class="form-section" style="background:white; border:none; padding:0;">
                     <h2 style="color:#118ab2; border-bottom:2px solid #eee; padding-bottom:10px;">

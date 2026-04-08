@@ -1,95 +1,98 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- MANEJO DE SESIÓN EN EL HEADER ---
+    // --- 1. GESTIÓN DE SESIÓN Y HEADER PERSISTENTE ---
     const infoUsuario = document.getElementById('info-usuario');
+    const btnLogout = document.getElementById('btn-logout');
     const usuarioGuardado = localStorage.getItem('usuarioLogueado');
 
     if (usuarioGuardado) {
         const user = JSON.parse(usuarioGuardado);
         
-        // Normalizamos el rol para la comparación (quitamos espacios y pasamos a minúsculas)
+        // Normalizamos el rol
         const rolReal = user.rol.trim().toLowerCase();
-        
         const rolCapitalizado = rolReal.charAt(0).toUpperCase() + rolReal.slice(1);
-        infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
+        
+        // Dibujamos la info en el header
+        if (infoUsuario) {
+            infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
+        }
 
         // --- LÓGICA DE RESTRICCIÓN DE NUEVO ENVÍO ---
         const btnNuevoEnvio = document.getElementById('btn-nuevo-envio');
-
-        // Verificamos el rol normalizado
         if (rolReal === 'supervisor' && btnNuevoEnvio) {
-            console.log("Rol de supervisor detectado. Ocultando botón de nuevo envío...");
             btnNuevoEnvio.style.setProperty('display', 'none', 'important');
         }
+
+        // Configuración del botón de Cerrar Sesión (Icono 👤)
+        if (btnLogout) {
+            btnLogout.style.display = 'inline-block'; // Nos aseguramos que sea visible
+            // Usamos onclick para evitar duplicar eventos si se recarga el script
+            btnLogout.onclick = () => {
+                if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                    localStorage.removeItem('usuarioLogueado');
+                    window.location.href = 'index.html';
+                }
+            };
+        }
+
     } else {
+        // Si no hay sesión, al login
         window.location.href = 'index.html';
         return;
     }
-    // Funcionalidad para Cerrar Sesión con confirmación
-    const btnLogout = document.getElementById('btn-logout');
-    if (btnLogout) {
-        btnLogout.addEventListener('click', () => {
-            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
-            if (confirmar) {
-                localStorage.removeItem('usuarioLogueado');
-                window.location.href = 'index.html';
-            }
-        });
-    }
-    // ---------------------------------------------
 
-    let envios = []; // Variable global para guardar los datos que traiga el servidor
+    // --- 2. LÓGICA DE LA TABLA Y DATOS ---
+    let envios = []; 
 
-    // Elementos del DOM
     const tbody = document.getElementById('tabla-envios-body');
     const inputBusqueda = document.getElementById('input-busqueda');
     const selectEstado = document.getElementById('select-estado');
     const mensajeVacio = document.getElementById('mensaje-vacio');
 
-    // 1. LEER DE LA MOCK API AL CARGAR LA PÁGINA
+    // Cargar datos de la API
     fetch('http://localhost:3000/envios')
         .then(response => response.json())
         .then(data => {
-            envios = data; // Guardamos los datos recibidos en nuestra variable
-            renderTable(envios); // Renderizamos la tabla
+            envios = data; 
+            renderTable(envios); 
         })
         .catch(error => console.error('Error al cargar envíos:', error));
 
-    // 2. FUNCIONES AUXILIARES PARA ESTILOS (BADGES)
     const getEstadoClass = (estado) => {
-        switch(estado) {
-            case 'Pendiente': return 'estado-pendiente';
-            case 'En tránsito': return 'estado-entransito';
-            case 'En sucursal': return 'estado-ensucursal';
-            case 'Entregado': return 'estado-entregado';
-            case 'Cancelado': return 'estado-cancelado';
-            default: return '';
-        }
+        const clases = {
+            'Pendiente': 'estado-pendiente',
+            'En tránsito': 'estado-entransito',
+            'En sucursal': 'estado-ensucursal',
+            'Entregado': 'estado-entregado',
+            'Cancelado': 'estado-cancelado'
+        };
+        return clases[estado] || '';
     };
 
     const getPrioridadClass = (prioridad) => {
-        switch(prioridad) {
-            case 'Alta': return 'prioridad-alta';
-            case 'Media': return 'prioridad-media';
-            case 'Baja': return 'prioridad-baja';
-            default: return '';
-        }
+        const clases = {
+            'Alta': 'prioridad-alta',
+            'Media': 'prioridad-media',
+            'Baja': 'prioridad-baja'
+        };
+        return clases[prioridad] || '';
     };
 
-   // 3. FUNCIÓN PARA RENDERIZAR LA TABLA (Versión Simplificada)
     const renderTable = (datos) => {
+        if (!tbody) return;
         tbody.innerHTML = ''; 
-        const usuario = JSON.parse(localStorage.getItem('usuarioLogueado'));
+        const user = JSON.parse(localStorage.getItem('usuarioLogueado'));
+        const rolReal = user.rol.trim().toLowerCase();
 
         if (datos.length === 0) {
-            mensajeVacio.classList.remove('hidden');
+            mensajeVacio?.classList.remove('hidden');
         } else {
-            mensajeVacio.classList.add('hidden');
+            mensajeVacio?.classList.add('hidden');
             datos.forEach(envio => {
                 const tr = document.createElement('tr');
 
-                // Lógica de visualización de estado según rol
-                const celdaEstado = usuario.rol === 'supervisor'
+                // Si es supervisor, mostramos el SELECT, si no, el BADGE
+                const celdaEstado = rolReal === 'supervisor'
                     ? `<select class="edit-estado" data-id="${envio.id}">
                         <option value="Pendiente" ${envio.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
                         <option value="En tránsito" ${envio.estado === 'En tránsito' ? 'selected' : ''}>En tránsito</option>
@@ -99,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </select>`
                     : `<span class="badge ${getEstadoClass(envio.estado)}">${envio.estado}</span>`;
 
-                // Construcción de la fila con 5 columnas exactas
                 tr.innerHTML = `
                     <td><strong>${envio.trackingId}</strong></td>
                     <td>${envio.destino}</td>
@@ -112,49 +114,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 tbody.appendChild(tr);
             });
 
-            // Eventos para los selectores (solo funcionarán si existen, es decir, si es supervisor)
             document.querySelectorAll('.edit-estado').forEach(select => {
                 select.addEventListener('change', (e) => actualizarEstado(e.target.dataset.id, e.target.value));
             });
         }
     };
     
-    // 4. FUNCIÓN PARA APLICAR FILTROS (BÚSQUEDA Y ESTADO)
+    // --- 3. FILTROS Y ACTUALIZACIÓN ---
     const aplicarFiltros = () => {
         const textoBusqueda = inputBusqueda.value.toLowerCase();
         const estadoFiltro = selectEstado.value;
 
-        // Filtramos usando la variable 'envios' que ya tiene los datos del servidor
         const datosFiltrados = envios.filter(envio => {
             const coincideTexto = envio.trackingId.toLowerCase().includes(textoBusqueda) || 
                                   envio.destinatario.toLowerCase().includes(textoBusqueda);
-            
             const coincideEstado = estadoFiltro === 'Todos' || envio.estado === estadoFiltro;
-
             return coincideTexto && coincideEstado;
         });
 
         renderTable(datosFiltrados);
     };
 
-    // 5. EVENT LISTENERS PARA LOS FILTROS
-    inputBusqueda.addEventListener('input', aplicarFiltros);
-    selectEstado.addEventListener('change', aplicarFiltros);
+    inputBusqueda?.addEventListener('input', aplicarFiltros);
+    selectEstado?.addEventListener('change', aplicarFiltros);
 
-    // 6. Para para guardar los cambios permanentemente con json.server cuando se actualizan los estados de los 
-    //envíos.
     const actualizarEstado = async (id, nuevoEstado) => {
         try {
             const res = await fetch(`http://localhost:3000/envios/${id}`, {
-                method: 'PATCH', // PATCH solo actualiza el campo que le enviamos
+                method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ estado: nuevoEstado })
             });
 
             if (res.ok) {
                 alert('Estado actualizado correctamente.');
-                // Opcional: recargar los datos para que los filtros se mantengan
-                location.reload(); 
+                // Actualizamos localmente el array de envios para no recargar la página entera
+                const index = envios.findIndex(e => String(e.id) === String(id));
+                if (index !== -1) envios[index].estado = nuevoEstado;
+                aplicarFiltros(); 
             } else {
                 alert('Error al actualizar el estado.');
             }

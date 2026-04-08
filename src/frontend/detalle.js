@@ -1,25 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- NUEVO: MANEJO DE SESIÓN EN EL HEADER ---
+    // --- 1. GESTIÓN DE SESIÓN EN EL HEADER (UNIFICADO) ---
     const infoUsuario = document.getElementById('info-usuario');
+    const btnLogout = document.getElementById('btn-logout');
     const usuarioGuardado = localStorage.getItem('usuarioLogueado');
 
     if (usuarioGuardado) {
         const user = JSON.parse(usuarioGuardado);
-        // Normalizamos y capitalizamos el rol
+        
+        // Normalizamos y capitalizamos el rol para mostrar en el header
         const rolReal = user.rol.trim().toLowerCase();
         const rolCapitalizado = rolReal.charAt(0).toUpperCase() + rolReal.slice(1);
         
-        // Mostramos: "Supervisor | Nombre" o "Operador | Nombre"
         if (infoUsuario) {
             infoUsuario.textContent = `${rolCapitalizado} | ${user.nombre}`;
         }
+
+        // Configuración persistente del botón de logout
+        if (btnLogout) {
+            btnLogout.style.display = 'inline-block';
+            btnLogout.onclick = () => { // Usamos onclick para asegurar un único evento
+                if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                    localStorage.removeItem('usuarioLogueado');
+                    window.location.href = 'index.html';
+                }
+            };
+        }
     } else {
-        // Si no hay sesión, redirigir al login
+        // Si no hay sesión, redirigir al login inmediatamente
         window.location.href = 'index.html';
         return;
     }
 
-    // 1. Obtener el Tracking ID de la URL (ej: ?id=TRK12345)
+    // --- 2. LÓGICA DE CARGA DE DETALLES DEL ENVÍO ---
     const urlParams = new URLSearchParams(window.location.search);
     const trackingIdBuscado = urlParams.get('id');
 
@@ -27,36 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensajeError = document.getElementById('mensaje-error');
 
     if (!trackingIdBuscado) {
-        mensajeError.classList.remove('hidden');
+        mensajeError?.classList.remove('hidden');
         return;
     }
 
-    // 2. NUEVO: Buscamos por la propiedad trackingId filtrando (?trackingId=...)
-    // Esto evita el problema de los IDs autogenerados por json-server
+    // Buscamos los datos por trackingId
     fetch(`http://localhost:3000/envios?trackingId=${trackingIdBuscado}`)
         .then(response => response.json())
         .then(data => {
-            // Como usamos un filtro, el servidor devuelve un array [].
-            // Si el array está vacío, significa que no existe.
             if (data.length === 0) {
                 throw new Error('Envío no encontrado');
             }
             
-            // Agarramos el primer resultado de la búsqueda
             const envio = data[0]; 
 
-            // 3. Llenamos los datos en el HTML
+            // Llenamos el HTML con los datos recibidos
             document.getElementById('det-trackingId').textContent = `#${envio.trackingId}`;
-            
             document.getElementById('det-rem-nombre').textContent = envio.remitente;
             document.getElementById('det-rem-origen').textContent = envio.origen;
-            
             document.getElementById('det-dest-nombre').textContent = envio.destinatario;
             document.getElementById('det-dest-destino').textContent = envio.destino;
-            
             document.getElementById('det-fecha').textContent = envio.fecha;
 
-            // Configurar los badges de Estado y Prioridad
+            // Actualizamos los estados con sus clases CSS
             const spanEstado = document.getElementById('det-estado');
             spanEstado.textContent = envio.estado;
             spanEstado.className = `badge ${getEstadoClass(envio.estado)}`;
@@ -65,44 +70,32 @@ document.addEventListener('DOMContentLoaded', () => {
             spanPrioridad.textContent = envio.prioridad;
             spanPrioridad.className = `badge ${getPrioridadClass(envio.prioridad)}`;
 
-            // Mostrar el contenedor de detalles
+            // Mostramos el contenedor principal
             contenedorDetalle.classList.remove('hidden');
         })
         .catch(error => {
             console.error('Error:', error);
-            mensajeError.classList.remove('hidden');
+            mensajeError?.classList.remove('hidden');
         });
 
-    // Funciones auxiliares
+    // --- 3. FUNCIONES AUXILIARES ---
     function getEstadoClass(estado) {
-        switch(estado) {
-            case 'Pendiente': return 'estado-pendiente';
-            case 'En tránsito': return 'estado-entransito';
-            case 'En sucursal': return 'estado-ensucursal';
-            case 'Entregado': return 'estado-entregado';
-            case 'Cancelado': return 'estado-cancelado';
-            default: return '';
-        }
-    }
-
-    // Funcionalidad para Cerrar Sesión con confirmación
-    const btnLogout = document.getElementById('btn-logout');
-    if (btnLogout) {
-        btnLogout.addEventListener('click', () => {
-            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
-            if (confirmar) {
-                localStorage.removeItem('usuarioLogueado');
-                window.location.href = 'index.html';
-            }
-        });
+        const clases = {
+            'Pendiente': 'estado-pendiente',
+            'En tránsito': 'estado-entransito',
+            'En sucursal': 'estado-ensucursal',
+            'Entregado': 'estado-entregado',
+            'Cancelado': 'estado-cancelado'
+        };
+        return clases[estado] || '';
     }
 
     function getPrioridadClass(prioridad) {
-        switch(prioridad) {
-            case 'Alta': return 'prioridad-alta';
-            case 'Media': return 'prioridad-media';
-            case 'Baja': return 'prioridad-baja';
-            default: return '';
-        }
+        const clases = {
+            'Alta': 'prioridad-alta',
+            'Media': 'prioridad-media',
+            'Baja': 'prioridad-baja'
+        };
+        return clases[prioridad] || '';
     }
 });
