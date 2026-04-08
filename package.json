@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "LogiTrack MVP",
   "scripts": {
-    "lint": "eslint src/**/*.js"
-  },
+  "start": "json-server --watch src/api_mock/db.json --port $PORT --host 0.0.0.0",
+  "lint": "eslint src/**/*.js"
+},
   "devDependencies": {
     "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
   }
 }
