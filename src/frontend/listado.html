@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Listado de Envíos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">LogiTrack 📦</div>
+        <div class="user-info">
+            <span id="info-usuario">Cargando...</span>
+            <button class="btn-icon">🔔</button>
+            <button class="btn-icon" id="btn-logout" title="Cerrar sesión">👤</button>
+        </div>
+    </header>
+
+    <main class="container list-container">
+        <div class="list-header">
+            <h1 class="page-title">Listado de Envíos</h1>
+           <a href="operador.html" class="btn-primary" style="text-decoration: none;">+ Nuevo Envío</a>
+        </div>
+        
+        <div class="filters-container">
+            <div class="form-group search-group">
+                <input type="text" id="input-busqueda" placeholder="Buscar por Tracking ID o Destinatario...">
+            </div>
+            <div class="form-group filter-group">
+                <select id="select-estado">
+                    <option value="Todos">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En tránsito">En tránsito</option>
+                    <option value="En sucursal">En sucursal</option>
+                    <option value="Entregado">Entregado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tracking ID</th>
+                        <th>Remitente</th>
+                        <th>Destinatario</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Estado</th>
+                        <th>Prioridad</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-envios-body">
+                    </tbody>
+            </table>
+            <div id="mensaje-vacio" class="hidden" style="text-align: center; padding: 20px; color: #666;">
+                Envío no encontrado.
+            </div>
+        </div>
+    </main>
+
+    <script src="listado.js"></script>
+</body>
+</html>

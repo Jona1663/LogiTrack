@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Registrar Envío</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">LogiTrack 📦</div>
+        <div class="user-info">
+            <span>Operador</span>
+            <button class="btn-icon">🔔</button>
+            <button class="btn-icon">👤</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Registrar Envío</h1>
+        
+        <form id="form-alta-envio" class="form-container">
+            <div class="form-row">
+                <section class="form-section">
+                    <h2>Datos del remitente:</h2>
+                    <div class="form-group">
+                        <label for="remitente-nombre">Nombre</label>
+                        <input type="text" id="remitente-nombre" required placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="remitente-direccion">Dirección</label>
+                        <input type="text" id="remitente-direccion" required placeholder="Calle 123">
+                    </div>
+                    <div class="form-group">
+                        <label for="remitente-telefono">Teléfono</label>
+                        <input type="tel" id="remitente-telefono" required placeholder="11 2345-6789">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    
+                    <h2>Datos del destinatario:</h2>
+                    <div class="form-group">
+                        <label for="destinatario-nombre">Nombre</label>
+                        <input type="text" id="destinatario-nombre" required placeholder="Ej: María Gómez">
+                    </div>
+                    <div class="form-group">
+                        <label for="destinatario-direccion">Dirección</label>
+                        <input type="text" id="destinatario-direccion" required placeholder="Av. Siempre Viva 742">
+                    </div>
+                    <div class="form-group">
+                        <label for="destinatario-telefono">Teléfono</label>
+                        <input type="tel" id="destinatario-telefono" required placeholder="11 9876-5432">
+                    </div>
+                </section>
+            </div>
+
+            <section class="form-section envios-details">
+                <h2>Datos del envío</h2>
+                
+                <div class="form-group inline-group">
+                    <label>Tipo de envío</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="tipoEnvio" value="Normal" checked> Normal</label>
+                        <label><input type="radio" name="tipoEnvio" value="Express"> Express</label>
+                    </div>
+                </div>
+
+                <div class="form-group inline-group">
+                    <label>Volumen del paquete</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="volumen" value="Pequeño"> Pequeño</label>
+                        <label><input type="radio" name="volumen" value="Mediano" checked> Mediano</label>
+                        <label><input type="radio" name="volumen" value="Grande"> Grande</label>
+                    </div>
+                </div>
+
+                <div class="form-group inline-group">
+                    <label>Restricciones</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="restricciones" value="Fragil"> Frágil</label>
+                        <label><input type="radio" name="restricciones" value="Refrigerado"> Refrigerado</label>
+                        <label><input type="radio" name="restricciones" value="Ninguna" checked> Ninguna</label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Registrar Envío</button>
+                <a href="listado.html" class="btn-secondary">Ver listado</a>
+            </div>
+        </form>
+
+        <div id="modal-exito" class="modal hidden">
+            <div class="modal-content">
+                <h2>¡Envío registrado correctamente!</h2>
+                <p>Tracking ID generado: <strong id="tracking-id-display"></strong></p>
+                <p>Prioridad sugerida: <strong id="prioridad-display"></strong></p>
+                <button id="btn-cerrar-modal" class="btn-secondary">Ver listado</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

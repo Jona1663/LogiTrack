@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos para la página de inicio (Login y Buscador) */
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+        .search-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 500px;
+            margin: 20px auto 0 auto;
+        }
+        .search-form input {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); }
+        .tab { cursor: pointer; font-weight: bold; color: #666; padding: 10px 20px; }
+        .tab.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+        .form-section { display: none; text-align: left; margin-top: 15px; }
+        .form-section.active { display: block; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .type-selector { display: flex; gap: 20px; margin-bottom: 20px; justify-content: center; font-weight: bold; }
+        .btn-primary { width: 100%; padding: 12px; font-size: 1rem; border: none; background-color: #118ab2; color: white; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-primary:hover { background-color: #0b6c8c; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">LogiTrack 📦</div>
+    </header>
+
+    <main class="container">
+        
+        <div class="hero-section">
+            <h1 style="color: #118ab2; margin-top: 0;">Conocé el estado de tu envío</h1>
+            <p style="color: #555;">Ingresá tu número de Tracking ID para ver los detalles y estado en tiempo real.</p>
+            <form class="search-form" onsubmit="buscarTracking(event)">
+                <input type="text" id="input-tracking" placeholder="Ej: TRK12345" required>
+                <button type="submit" class="btn-primary" style="width: auto; padding: 12px 25px;">🔍 Buscar</button>
+            </form>
+        </div>
+
+        <div class="login-box">
+            <div class="tabs">
+                <div id="tab-login" class="tab active" onclick="showTab('login')">Ingresar</div>
+                <div id="tab-reg" class="tab" onclick="showTab('reg')">Registrarse</div>
+            </div>
+
+            <div id="form-login" class="form-section active">
+                <div class="type-selector">
+                    <label><input type="radio" name="loginType" value="cliente" checked onchange="toggleLogin()"> Soy Cliente</label>
+                    <label><input type="radio" name="loginType" value="empleado" onchange="toggleLogin()"> Soy Empleado</label>
+                </div>
+                
+                <form id="login-cliente" onsubmit="loginCliente(event)">
+                    <div class="form-group"><label>Email</label><input type="email" id="log-cli-email" required></div>
+                    <div class="form-group"><label>Contraseña</label><input type="password" id="log-cli-pass" required></div>
+                    <button type="submit" class="btn-primary">Entrar al panel</button>
+                </form>
+
+                <form id="login-empleado" style="display:none;" onsubmit="loginEmpleado(event)">
+                    <div class="form-group"><label>Nro. de Legajo</label><input type="number" id="log-emp-legajo" required></div>
+                    <div class="form-group"><label>Contraseña</label><input type="password" id="log-emp-pass" required></div>
+                    <button type="submit" class="btn-primary">Entrar al sistema</button>
+                </form>
+            </div>
+
+            <div id="form-reg" class="form-section">
+                <div class="type-selector">
+                    <label><input type="radio" name="regType" value="cliente" checked onchange="toggleReg()"> Cliente</label>
+                    <label><input type="radio" name="regType" value="empleado" onchange="toggleReg()"> Empleado</label>
+                </div>
+
+                <form id="reg-cliente" onsubmit="registrarCliente(event)">
+                    <div class="form-group"><label>DNI</label><input type="number" id="reg-cli-dni" required></div>
+                    <div class="form-group"><label>Nombre y Apellido</label><input type="text" id="reg-cli-nombre" required></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="reg-cli-email" required></div>
+                    <div class="form-group"><label>Contraseña</label><input type="password" id="reg-cli-pass" required></div>
+                    <button type="submit" class="btn-primary">Crear Cuenta</button>
+                </form>
+
+                <form id="reg-empleado" style="display:none;" onsubmit="registrarEmpleado(event)">
+                    <div class="form-group"><label>Nro. de Legajo (1000-1999 Sup / 2000-2999 Oper)</label><input type="number" id="reg-emp-legajo" required></div>
+                    <div class="form-group"><label>Nombre y Apellido</label><input type="text" id="reg-emp-nombre" required></div>
+                    <div class="form-group"><label>Contraseña</label><input type="password" id="reg-emp-pass" required></div>
+                    <button type="submit" class="btn-primary">Registrarse en el sistema</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API = 'http://localhost:3000';
+
+        // --- MANEJO DE PESTAÑAS (TABS) ---
+        function showTab(type) {
+            document.getElementById('form-login').classList.toggle('active', type === 'login');
+            document.getElementById('form-reg').classList.toggle('active', type === 'reg');
+            document.getElementById('tab-login').classList.toggle('active', type === 'login');
+            document.getElementById('tab-reg').classList.toggle('active', type === 'reg');
+        }
+
+        function toggleLogin() {
+            const isCliente = document.querySelector('input[name="loginType"]:checked').value === 'cliente';
+            document.getElementById('login-cliente').style.display = isCliente ? 'block' : 'none';
+            document.getElementById('login-empleado').style.display = isCliente ? 'none' : 'block';
+        }
+
+        function toggleReg() {
+            const isCliente = document.querySelector('input[name="regType"]:checked').value === 'cliente';
+            document.getElementById('reg-cliente').style.display = isCliente ? 'block' : 'none';
+            document.getElementById('reg-empleado').style.display = isCliente ? 'none' : 'block';
+        }
+
+        // ----------------------------------------------------
+        // 1. BUSCADOR CENTRAL: REDIRIGE A DETALLE.HTML
+        // ----------------------------------------------------
+        function buscarTracking(e) {
+            e.preventDefault();
+            const trackingId = document.getElementById('input-tracking').value.trim().toUpperCase();
+            if (!trackingId) return;
+            window.location.href = `detalle.html?id=${trackingId}`;
+        }
+
+        // ----------------------------------------------------
+        // 2. LÓGICA ROBUSTA DE LOGIN/REGISTRO EMPLEADOS
+        // ----------------------------------------------------
+        async function loginEmpleado(e) {
+            e.preventDefault();
+
+            // Obtenemos los valores de los inputs
+            //Usamos .trim() al capturar los inputs ya que si hayun espacio al final sin querer
+            // eso puede romper el login.
+            const legajo = document.getElementById('log-emp-legajo').value.trim();
+            const clave = document.getElementById('log-emp-pass').value.trim();
+
+            try {
+                // Traemos todos los empleados para hacer una búsqueda más segura del lado del cliente
+                // Esto evita problemas de filtros de URL en diferentes versiones de json-server
+                const res = await fetch(`${API}/empleados`);
+                const usuarios = await res.json();
+
+                // Buscamos al usuario normalizando ambos valores a String para evitar errores de tipo 
+                // (Number vs String)
+                const user = usuarios.find(emp => String(emp.legajo) === String(legajo));
+
+                if (user) {
+                    // Verificamos la clave (también normalizada a String por seguridad)
+                    if (String(user.clave) === String(clave)) {
+                        alert(`¡Bienvenido ${user.nombre}!`);
+                        
+                        // Guardamos el objeto en LocalStorage (incluyendo el nombre y rol para el header)
+                        localStorage.setItem('usuarioLogueado', JSON.stringify({
+                            nombre: user.nombre,
+                            rol: user.rol 
+                        }));
+
+                        // Redirección
+                        window.location.href = 'listado.html';
+
+                    } else {
+                        alert("Contraseña incorrecta.");
+                    } 
+
+                } else {
+                    alert("Legajo no encontrado. Por favor, verifique los datos.");
+                }
+            } catch (err) { 
+                console.error("Error detallado:", err);
+                alert("Error al conectar con el servidor. ¿Está corriendo json-server?"); 
+            }
+        }
+
+        async function registrarEmpleado(e) {
+            e.preventDefault();
+            const legajo = document.getElementById('reg-emp-legajo').value;
+            const nombre = document.getElementById('reg-emp-nombre').value;
+            const clave = document.getElementById('reg-emp-pass').value;
+            const nro = parseInt(legajo);
+            
+            let rol = (nro >= 1000 && nro <= 1999) ? "supervisor" : (nro >= 2000 && nro <= 2999) ? "operador" : null;
+            if (!rol) return alert("Legajo fuera de rango. Recordá: 1000-1999 (Supervisor) o 2000-2999 (Operador).");
+
+            const check = await fetch(`${API}/empleados?legajo=${legajo}`);
+            const exist = await check.json();
+            if (exist.length > 0) return alert("Este legajo ya está registrado.");
+
+            await fetch(`${API}/empleados`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: legajo, legajo, nombre, rol, clave })
+            });
+
+            alert("Registro exitoso. Ahora podés ingresar al sistema.");
+            showTab('login');
+        }
+
+        // ----------------------------------------------------
+        // 3. LÓGICA DE LOGIN/REGISTRO CLIENTES
+        // ----------------------------------------------------
+        async function loginCliente(e) {
+            e.preventDefault();
+            const email = document.getElementById('log-cli-email').value;
+            const pass = document.getElementById('log-cli-pass').value;
+            const res = await fetch(`${API}/clientes?email=${email}&clave=${pass}`);
+            const data = await res.json();
+            
+            if(data.length > 0) {
+                alert(`¡Hola ${data[0].nombre}!`);
+                
+                // Guardamos el cliente en LocalStorage como "Empresa"
+                localStorage.setItem('usuarioLogueado', JSON.stringify({
+                    nombre: data[0].nombre,
+                    rol: 'empresa' 
+                }));
+
+                window.location.href = 'listado.html'; 
+            } else {
+                alert("Email o contraseña incorrectos.");
+            }
+        }
+
+        async function registrarCliente(e) {
+            e.preventDefault();
+            const dni = document.getElementById('reg-cli-dni').value;
+            const check = await fetch(`${API}/clientes?dni=${dni}`);
+            const exist = await check.json();
+            if(exist.length > 0) return alert("El DNI ya se encuentra registrado.");
+
+            const data = {
+                id: dni, 
+                dni: dni,
+                nombre: document.getElementById('reg-cli-nombre').value,
+                email: document.getElementById('reg-cli-email').value,
+                clave: document.getElementById('reg-cli-pass').value
+            };
+
+            await fetch(`${API}/clientes`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            alert("Cuenta de cliente creada exitosamente.");
+            showTab('login');
+        }
+    </script>
+</body>
+</html>

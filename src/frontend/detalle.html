@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiTrack - Detalle de Envío</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Un par de estilos extra solo para organizar las tarjetas del detalle */
+        .detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .detalle-card { background: #f8f9fa; padding: 20px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .detalle-card h3 { margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; font-size: 1.1rem; }
+        .detalle-item { margin-bottom: 10px; font-size: 0.95rem; }
+        .detalle-item strong { color: #555; display: inline-block; width: 120px; }
+        .header-detalle { display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">LogiTrack 📦</div>
+        <div class="user-info">
+            <span>Operador</span>
+            <button class="btn-icon">🔔</button>
+            <button class="btn-icon">👤</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="header-detalle">
+            <h1 class="page-title" style="margin-bottom: 0;">Detalle de Envío <span id="det-trackingId" style="color: #118ab2;"></span></h1>
+            <a href="listado.html" class="btn-secondary">← Volver al Listado</a>
+        </div>
+
+        <div id="mensaje-error" class="hidden" style="text-align: center; margin-top: 40px; color: red;">
+            <h2>Envío no encontrado</h2>
+            <p>El Tracking ID no existe o fue eliminado.</p>
+        </div>
+
+        <div id="contenedor-detalle" class="detalle-grid hidden">
+            <div class="detalle-card">
+                <h3>Datos del Remitente</h3>
+                <div class="detalle-item"><strong>Nombre:</strong> <span id="det-rem-nombre"></span></div>
+                <div class="detalle-item"><strong>Origen:</strong> <span id="det-rem-origen"></span></div>
+            </div>
+
+            <div class="detalle-card">
+                <h3>Datos del Destinatario</h3>
+                <div class="detalle-item"><strong>Nombre:</strong> <span id="det-dest-nombre"></span></div>
+                <div class="detalle-item"><strong>Destino:</strong> <span id="det-dest-destino"></span></div>
+            </div>
+
+            <div class="detalle-card" style="grid-column: span 2;">
+                <h3>Información Logística</h3>
+                <div class="detalle-grid" style="margin-top: 0; gap: 10px;">
+                    <div>
+                        <div class="detalle-item"><strong>Estado Actual:</strong> <span id="det-estado" class="badge"></span></div>
+                        <div class="detalle-item"><strong>Prioridad (IA):</strong> <span id="det-prioridad" class="badge"></span></div>
+                        <div class="detalle-item"><strong>Fecha Creación:</strong> <span id="det-fecha"></span></div>
+                    </div>
+                    <div>
+                        <div class="detalle-item"><strong>Observaciones:</strong> <span style="color: #888; font-style: italic;">Sin observaciones registradas.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="detalle.js"></script>
+</body>
+</html>

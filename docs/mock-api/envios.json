@@ -1,0 +1,37 @@
+{
+  "envios": [
+    {
+      "trackingId": "TRK12345",
+      "remitente": "Juan Perez",
+      "destinatario": "Maria Gomez",
+      "direccionDestino": "charlone 7834",
+      "tipoEnvio": "express",
+      "volumen": "mediano",
+      "restricciones": "fragil",
+      "prioridad": "Baja",
+      "estado": "Pendiente"
+    },
+    {
+      "trackingId": "TRK98765",
+      "remitente": "Carlos Lopez",
+      "destinatario": "Ana Torres",
+      "direccionDestino": "cespedes 4576",
+      "tipoEnvio": "normal",
+      "volumen": "grande",
+      "restricciones": "ninguna",
+      "prioridad": "Media",
+      "estado": "En tránsito"
+    },
+    {
+      "trackingId": "TRK67890",
+      "remitente": "Empresa SRL",
+      "destinatario": "Pedro Ruiz",
+      "direccionDestino": "forest 543",
+      "tipoEnvio": "express",
+      "volumen": "pequeño",
+      "restricciones": "refrigeracion",
+      "prioridad": "Alta",
+      "estado": "Entregado"
+    }
+  ]
+}

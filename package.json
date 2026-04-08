@@ -1,0 +1,11 @@
+{
+  "name": "logitrack",
+  "version": "1.0.0",
+  "description": "LogiTrack MVP",
+  "scripts": {
+    "lint": "eslint src/**/*.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
+  }
+}

@@ -1,0 +1,27 @@
+name: LogiTrack CI Pipeline
+
+# El robot se despierta cada vez que alguien hace "push" (sube código) a la rama main o master
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest # El robot usa una compu virtual con Linux
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar entorno de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias (Linter)
+        run: npm install
+
+      - name: Ejecutar Linter (Revisión de código)
+        run: npm run lint

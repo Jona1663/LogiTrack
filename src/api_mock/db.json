@@ -1,0 +1,89 @@
+{
+  "envios": [
+    {
+      "id": "TRK12345",
+      "trackingId": "TRK12345",
+      "remitente": "Juan Perez",
+      "destinatario": "Ana Gomez",
+      "origen": "primera junta 3456",
+      "destino": "cordoba 2354",
+      "estado": "En sucursal",
+      "prioridad": "Alta",
+      "fecha": "2026-04-03"
+    },
+    {
+      "id": "4k3Qjb6gFsQ",
+      "trackingId": "TRK84720",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asdasdasd",
+      "destino": "asd",
+      "estado": "Pendiente",
+      "prioridad": "Baja",
+      "fecha": "3/4/2026"
+    },
+    {
+      "id": "T95Ji_VUoN8",
+      "trackingId": "TRK52057",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "estado": "Entregado",
+      "prioridad": "Baja",
+      "fecha": "3/4/2026"
+    },
+    {
+      "id": "X5uMbQhjt00",
+      "trackingId": "TRK29506",
+      "remitente": "Jorge Fernandez",
+      "destinatario": "Jonatan Capecce",
+      "origen": "serruti 4567",
+      "destino": "cespedes 8754",
+      "estado": "Pendiente",
+      "prioridad": "Alta",
+      "fecha": "7/4/2026"
+    }
+  ],
+  "empleados": [
+    {
+      "id": "1000",
+      "legajo": "1000",
+      "nombre": "Luis",
+      "apellido": "Admin",
+      "rol": "supervisor",
+      "clave": "1234"
+    },
+    {
+      "legajo": "1003",
+      "nombre": "Luis23",
+      "rol": "supervisor",
+      "clave": "4451",
+      "id": "38-eYToDr3s"
+    },
+    {
+      "id": "r1nhgIEG_Ek",
+      "legajo": "1030",
+      "nombre": "luis veliz",
+      "rol": "supervisor",
+      "clave": "4451"
+    },
+    {
+      "id": "6iZtQ9tbIgI",
+      "legajo": "1050",
+      "nombre": "asdad",
+      "rol": "supervisor",
+      "clave": "1234"
+    }
+  ],
+  "clientes": [
+    {
+      "id": "ec0XJDxuU-k",
+      "dni": "40923016",
+      "nombre": "luis veliz",
+      "email": "luisveliz970@gmail.com",
+      "clave": "lucho4451"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

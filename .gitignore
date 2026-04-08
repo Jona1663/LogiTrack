@@ -1,0 +1,52 @@
+# =========================
+# 1. Dependencias de Node.js (Frontend / Mock API)
+# =========================
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnp
+.pnp.js
+
+# =========================
+# 2. Python y Machine Learning (Módulo IA)
+# =========================
+# Archivos compilados y caché
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Modelos exportados o datasets pesados (opcional, pero recomendado)
+*.pkl
+*.csv
+*.dat
+
+# =========================
+# 3. Variables de Entorno y Secretos
+# =========================
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# =========================
+# 4. Archivos del Sistema Operativo
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# 5. Entornos de Desarrollo (IDEs)
+# =========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
